@@ -12,4 +12,10 @@ const findByEmail = async (email) => {
     return getByEmail;
  };
 
-module.exports = { createUser, findByEmail };
+const validateLogin = async ({ email, password }) => {
+    const db = await connection();
+    const login = await db.collection('users').findOne({ email, password });
+    return login;
+};
+
+module.exports = { createUser, findByEmail, validateLogin };

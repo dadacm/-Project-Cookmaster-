@@ -15,4 +15,15 @@ const createUser = async (param) => {
     return { status: 201, result };
 };
 
-module.exports = { createUser };
+const validateLogin = async (param) => {
+if (!param.email || !param.password) {
+    return { status: 401, message: 'All fields must be filled' };
+}
+const login = await usersModel.validateLogin(param);
+if (!login) {
+return { status: 401, message: 'Incorrect username or password' };
+}
+return { status: 200, data: param };
+};
+
+module.exports = { createUser, validateLogin };
