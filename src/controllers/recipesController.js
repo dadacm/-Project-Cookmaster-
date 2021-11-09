@@ -13,4 +13,9 @@ if (message) {
      });
 };
 
-module.exports = { createRecipe };
+const getAllRecipes = async (req, res) => {
+  const { status, recipes } = await recipesService.getAllRecipes();
+  return res.status(status).json(recipes);
+};
+
+module.exports = { createRecipe, getAllRecipes };

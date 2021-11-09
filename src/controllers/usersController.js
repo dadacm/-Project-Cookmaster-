@@ -21,8 +21,7 @@ const param = req.body;
 const { status, message, data } = await usersService.validateLogin(param);
 if (message) { return res.status(status).json({ message }); }
 const token = jwt.sign(data, secretToken, jwtConfig);
-// await console.log(token);
-res.status(200).json({ token });
+res.status(status).json({ token });
 };
 
 module.exports = { createUser, loginUser };

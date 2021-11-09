@@ -8,4 +8,9 @@ const createRecipes = async (param) => {
     return { status: 201, result };
 };
 
-module.exports = { createRecipes }; 
+const getAllRecipes = async () => {
+ const recipes = await recipesModel.getAllRecipes();
+ return { status: 200, recipes };
+};
+
+module.exports = { createRecipes, getAllRecipes }; 
