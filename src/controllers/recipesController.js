@@ -3,11 +3,10 @@ const recipesService = require('../services/recipesService');
 const createRecipe = async (req, res) => {
 const param = req.body;
 const { _id } = req.user;
-const { status, message, result } = await recipesService.createRecipes(param);
+const { status, message, result } = await recipesService.createRecipes(param, _id);
 if (message) {
   return res.status(status).json({ message });
 }
- result.userId = _id;
   return res.status(status).json({
       recipe: result,
      });
@@ -36,4 +35,15 @@ const updateRecipe = async (req, res) => {
   return res.status(status).json(recipe);
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };
+const deleteRecipe = async (req, res) => {
+  const id = req.params;
+  const { _id } = req.user;
+  const userId = _id;
+  const deleted = await recipesService.deleteRecipe(id, userId);
+  if (!deleted) {
+    return res.status(405).json({ message: 'message' });
+  }
+  return res.status(204).send(deleted);
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe };

@@ -1,10 +1,11 @@
 const recipesModel = require('../models/recipesModel');
+const usersModel = require('../models/usersModel');
 
-const createRecipes = async (param) => {
+const createRecipes = async (param, userId) => {
     if (!param.name || !param.ingredients || !param.preparation) { 
         return { status: 400, message: 'Invalid entries. Try again.' };
     }
-    const result = await recipesModel.createRecipe(param);
+    const result = await recipesModel.createRecipe(param, userId);
     return { status: 201, result };
 };
 
@@ -29,4 +30,15 @@ const recipe = await recipesModel.updateRecipe(id, userId, param);
 return { status: 200, recipe };
 };
 
-module.exports = { createRecipes, getAllRecipes, getRecipeById, updateRecipe }; 
+const deleteRecipe = async (id, userId) => {
+const findRecipe = await recipesModel.getRecipe(id.id);
+const user = await usersModel.findById(userId);
+if (user.role === 'user' && findRecipe.userId.toString() !== userId.toString()) {
+  return null;
+}
+const deletedRecipe = await recipesModel.deleteRecipe(id);
+if (!deletedRecipe) { return { message: 'error' }; }
+return deletedRecipe;
+};
+
+module.exports = { createRecipes, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe }; 
