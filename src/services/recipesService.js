@@ -24,4 +24,9 @@ if (!recipe) {
 return { status: 200, recipe };
 };
 
-module.exports = { createRecipes, getAllRecipes, getRecipeById }; 
+const updateRecipe = async (id, userId, param) => {
+const recipe = await recipesModel.updateRecipe(id, userId, param);
+return { status: 200, recipe };
+};
+
+module.exports = { createRecipes, getAllRecipes, getRecipeById, updateRecipe }; 

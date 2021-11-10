@@ -6,7 +6,7 @@ const secretToken = 'chefeMestre';
 const tokenValidation = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(400).json({ message: 'missing auth token' });
+    return res.status(401).json({ message: 'missing auth token' });
   }
   try {
     const decoded = jwt.verify(token, secretToken);

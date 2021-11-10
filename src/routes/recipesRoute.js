@@ -1,11 +1,13 @@
 const Router = require('express').Router();
 const validateToken = require('../api/auth/validatejwt');
-const recipesContoller = require('../controllers/recipesController');
+const recipesController = require('../controllers/recipesController');
 
-Router.post('/', validateToken, recipesContoller.createRecipe);
+Router.post('/', validateToken, recipesController.createRecipe);
 
-Router.get('/', recipesContoller.getAllRecipes);
+Router.get('/', recipesController.getAllRecipes);
 
-Router.get('/:id', recipesContoller.getRecipeById);
+Router.get('/:id', recipesController.getRecipeById);
+
+Router.put('/:id', validateToken, recipesController.updateRecipe);
 
 module.exports = Router;
