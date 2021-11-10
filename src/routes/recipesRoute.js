@@ -6,4 +6,6 @@ Router.post('/', validateToken, recipesContoller.createRecipe);
 
 Router.get('/', recipesContoller.getAllRecipes);
 
+Router.get('/:id', recipesContoller.getRecipeById);
+
 module.exports = Router;

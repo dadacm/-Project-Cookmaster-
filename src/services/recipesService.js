@@ -9,8 +9,19 @@ const createRecipes = async (param) => {
 };
 
 const getAllRecipes = async () => {
- const recipes = await recipesModel.getAllRecipes();
- return { status: 200, recipes };
+ const recipe = await recipesModel.getAllRecipes();
+ if (!recipe) {
+    return { status: 404, message: 'recipe not found' };
+  }
+ return { status: 200, recipe };
 };
 
-module.exports = { createRecipes, getAllRecipes }; 
+const getRecipeById = async (id) => {
+const recipe = await recipesModel.getRecipe(id);
+if (!recipe) {
+    return { status: 404, message: 'recipe not found' };
+  }
+return { status: 200, recipe };
+};
+
+module.exports = { createRecipes, getAllRecipes, getRecipeById }; 

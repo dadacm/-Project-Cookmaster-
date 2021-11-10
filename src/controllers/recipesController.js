@@ -14,8 +14,17 @@ if (message) {
 };
 
 const getAllRecipes = async (req, res) => {
-  const { status, recipes } = await recipesService.getAllRecipes();
-  return res.status(status).json(recipes);
+  const { status, recipe } = await recipesService.getAllRecipes();
+  return res.status(status).json(recipe);
 };
 
-module.exports = { createRecipe, getAllRecipes };
+const getRecipeById = async (req, res) => {
+  const { id } = await req.params;
+const { status, recipe, message } = await recipesService.getRecipeById(id);
+if (message) {
+  return res.status(status).json({ message });
+}
+return res.status(status).json(recipe);
+}; 
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById };
