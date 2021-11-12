@@ -41,9 +41,17 @@ const deleteRecipe = async (req, res) => {
   const userId = _id;
   const deleted = await recipesService.deleteRecipe(id, userId);
   if (!deleted) {
-    return res.status(405).json({ message: 'message' });
+    return res.status(405).json({ message: 'Deu ruim' });
   }
   return res.status(204).send(deleted);
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe };
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const data = req.user;
+  const { result, status } = await recipesService.addImage(id, data);
+  return res.status(status).json(result);
+};
+
+module.exports = { 
+  createRecipe, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe, addImage };

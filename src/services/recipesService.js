@@ -41,4 +41,25 @@ if (!deletedRecipe) { return { message: 'error' }; }
 return deletedRecipe;
 };
 
-module.exports = { createRecipes, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe }; 
+const addImage = async (id, data) => {
+  const { _id } = data;
+  const { role } = data;
+  const recipeById = await recipesModel.getRecipe(id);
+  const imageUrl = `localhost:3000/src/uploads/${id}.jpeg`;
+  if (role === 'user' && recipeById.userId.toString() !== _id.toString()) {
+    return null;
+  }
+    await recipesModel.addImage(id, imageUrl);
+    const result = {
+      _id: id,
+      name: recipeById.name,
+      ingredients: recipeById.ingredients,
+      preparation: recipeById.preparation,
+      userId: recipeById.userId,
+      image: imageUrl,
+    };
+    return { status: 200, result };
+};
+
+module.exports = { 
+  createRecipes, getAllRecipes, getRecipeById, updateRecipe, deleteRecipe, addImage }; 
