@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const usersRoute = require('../routes/usersRoute');
 const loginRoute = require('../routes/loginRoute');
 const recipesRoute = require('../routes/recipesRoute');
@@ -18,5 +19,7 @@ app.use('/users', usersRoute);
 app.use('/recipes', recipesRoute);
 
 app.use('/', loginRoute);
+
+app.use('/images', express.static(`${__dirname}/../uploads`));
 
 module.exports = app;
